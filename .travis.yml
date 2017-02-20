@@ -1,0 +1,25 @@
+language: php
+
+php:
+    - '5.6'
+    - '7.0'
+    - hhvm
+
+sudo: false
+
+branches:
+    only:
+        - master
+        - /^\d.\d$/
+
+git:
+    depth: 1
+
+install:
+    - composer install --prefer-dist
+
+cache:
+    - apt
+    - $HOME/.composer/cache
+
+script: vendor/bin/phpunit

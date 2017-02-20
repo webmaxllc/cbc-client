@@ -1,0 +1,14 @@
+test.php
+.DS_Store
+/vendor
+/phpunit.xml
+/coverage
+/coverage.xml
+.buildpath
+.project
+.settings
+.settings/*
+app/sessions/*
+.DS_Store
+/.idea/*
+/tmp

@@ -1,0 +1,39 @@
+{
+    "name": "webmax/vidverify-client",
+    "description": "VidVerify PHP client built with Guzzle",
+    "keywords": ["vidverify", "marketing", "webmax"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Frank Bardon Jr.",
+            "email": "frankbardon@gmail.com"
+        },
+        {
+            "name": "Alyssa Stone",
+            "email": "alyssa.stone@webmaxco.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Webmax\\VidVerifyClient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": ["tests/"]
+    },
+    "require": {
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "~6.2",
+        "jms/serializer": "~0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.8 || ~5.2",
+        "mockery/mockery": "~0.9"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+  <class name="Webmax\VidVerifyClient\Model\Activity" exclusion-policy="ALL">
+    <property name="borrowerId" serialized-name="borrower_id" type="integer" expose="true" />
+    <property name="videoId" serialized-name="video_id" type="integer" expose="true" />
+    <property name="videoTitle" serialized-name="video_title" type="string" expose="true" />
+    <property name="videoStartTime" serialized-name="video_start_time" expose="true">
+      <type><![CDATA[ DateTime<'m/d/Y H:i:s'> ]]></type>
+    </property>
+    <property name="rawVideoLength" serialized-name="total_video_length" type="string" expose="true" />
+    <property name="rawWatchedVideoLength" serialized-name="watched_video_length" type="string" expose="true" />
+  </class>
+</serializer>

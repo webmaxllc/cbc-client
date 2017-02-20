@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+  <class name="Webmax\VidVerifyClient\Model\InvoiceRecord" exclusion-policy="ALL">
+    <property name="borrowerId" serialized-name="BorrowerSpecificNumber" type="integer" expose="true" />
+    <property name="watchedVideoCount" serialized-name="watched_videos_count" type="integer" expose="true" />
+  </class>
+</serializer>
