@@ -52,12 +52,38 @@ $env = '<endpoint-subdomain>';
 
 $client = new CBCClient($env, $loginId, $password, [], null, true);
 
+$loanNumber = 12345678;
+$loanOfficer = "James Johnson";
+$applicant = new stdClass;
+$applicant->firstName = "John";
+$applicant->middleInitial = "G";
+$applicant->lastName = "Doe";
+$applicant->suffix = "Jr.";
+$applicant->homePhone = 5555551234;
+$applicant->dob = "7/21/1997";
+
+$house = new stdClass;
+$house->streetAddress = "123 Atlantic Avenue";
+$house->city = "Atlantic City";
+$house->state = 'NJ');
+$house->zip = 12345;
+
+$applicant->residences = array($house);
+
 $requestor = new stdClass;
 $requestor->name = "Some Mortgage Co";
 $requestor->streetAddress = "123 Some Lane, Suite 100";
 $requestor->city = "Daytona Beach";
 $requestor->state = "FL";
 $requestor->zip = "32124";
+$submittor = new stdClass;
+$requestor->name = "Some Dev Co";
+$requestor->streetAddress = "123 Some Lane, Suite 200";
+$requestor->city = "Daytona Beach";
+$requestor->state = "FL";
+$requestor->zip = "32124";
+$report = $client->getCreditReport($loanNumber,$loanOfficer,$applicant,$requestor,$submittor);
+
 ```
 
 Contributing
