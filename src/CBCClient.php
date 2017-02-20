@@ -27,12 +27,6 @@ class CBCClient
     const RECEIVING_STATE = "OH";
     const RECEIVING_POSTAL_CODE = "43215";
 
-    const SUBMITTING_NAME = "Webmax";
-    const SUBMITTING_STREET_ADDRESS = "461 Rt 168, Suite B";
-    const SUBMITTING_CITY = "Turnersville";
-    const SUBMITTING_STATE = "NJ";
-    const SUBMITTING_POSTAL_CODE = "08012";
-
     /**
      * Guzzle HTTP client
      *
@@ -104,16 +98,17 @@ class CBCClient
     /**
      * Get credit report.
      *
-     * @param object $borrower
+     * @param string $loanNumber
+     * @param string $loanOfficer
+     * @param object $applicant
      * @param object $requesor
      * @param object $submittor
-     * @param integer|null $month
      *
      * @return \SimpleXMLElement|null
      */
-    public function getCreditReport($loanNumber, $loanOfficer, $applicant, $requestor)
+    public function getCreditReport($loanNumber, $loanOfficer, $applicant, $requestor, $submittor)
     {
-        $xml = $this->getXMLFromData($loanNumber, $loanOfficer, $applicant, $requestor);
+        $xml = $this->getXMLFromData($loanNumber, $loanOfficer, $applicant, $requestor, $submittor);
 
         $response = $this->client->request('POST', sprintf('/servlet/gnbank?logid=%s&command=%s&options=%s',$this->loginId,'apiordretpost',"ORD%3dIN+PA%3dXM+TEXT%3dN+PS%3dA+REVL%3dY+REVF%3dX4+SOFTWARE%3dZZ+MOPT%3d+-opt+newxmlerr"), array(
             'body'=>$xml
@@ -128,7 +123,7 @@ class CBCClient
         return new \SimpleXMLElement($body);
     }
 
-    protected function getXMLFromData($loanNumber,$loanOfficer,$applicant,$requestor) {
+    protected function getXMLFromData($loanNumber,$loanOfficer,$applicant,$requestor, $submittor) {
 
         $mismo = new \SimpleXMLElement("<root></root>");
 
@@ -152,11 +147,11 @@ class CBCClient
             $receivingParty->addAttribute("_PostalCode", self::RECEIVING_POSTAL_CODE);
 
             $submittingParty = $requestGroup->addChild("RECEIVING_PARTY");
-            $submittingParty->addAttribute("_Name", self::SUBMITTING_NAME);
-            $submittingParty->addAttribute("_StreetAddress", self::SUBMITTING_STREET_ADDRESS);
-            $submittingParty->addAttribute("_City", self::SUBMITTING_CITY);
-            $submittingParty->addAttribute("_State", self::SUBMITTING_STATE);
-            $submittingParty->addAttribute("_PostalCode", self::SUBMITTING_POSTAL_CODE);
+            $submittingParty->addAttribute("_Name", $submittor->name);
+            $submittingParty->addAttribute("_StreetAddress", $submittor->streetAddress);
+            $submittingParty->addAttribute("_City", $submittor->city);
+            $submittingParty->addAttribute("_State", $submittor->state);
+            $submittingParty->addAttribute("_PostalCode", $submittor->zip);
 
             $request = $requestGroup->addChild("REQUEST");
             $request->addAttribute("LoginAccountIdentifier",$this->loginId);
