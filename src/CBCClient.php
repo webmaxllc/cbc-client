@@ -47,21 +47,7 @@ class CBCClient
      */
     private $debug;
 
-    /**
-     * JMS Serializer
-     *
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * JMS Serializer cache directory
-     *
-     * @var string
-     */
-    private $serializerCacheDirectory;
-
-    private $logId;
+    private $loginId;
 
     private $password;
 

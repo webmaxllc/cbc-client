@@ -1,11 +1,11 @@
-VidVerify API client
+CBC API client
 ================
 
-- [![Build Status](https://travis-ci.org/webmaxllc/vidverify-client.svg?branch=master)](https://travis-ci.org/webmaxllc/vidverify-client) master
-- [![Build Status](https://travis-ci.org/webmaxllc/vidverify-client.svg?branch=1.0)](https://travis-ci.org/webmaxllc/vidverify-client) 1.0
+- [![Build Status](https://travis-ci.org/webmaxllc/cbc-client.svg?branch=master)](https://travis-ci.org/webmaxllc/vidverify-client) master
+- [![Build Status](https://travis-ci.org/webmaxllc/cbc-client.svg?branch=1.0)](https://travis-ci.org/webmaxllc/vidverify-client) 1.0
 
-The VidVerify API client is a PHP library which provides simplified access to
-the [VidVerify API](http://vidverify.com) and the data it returns.
+The CBC API client is a PHP library which provides simplified access to
+the [CBC INNOVIS API](http://cbcinnovis.com) and the data it returns.
 
 > This plugin is currently in development with no stable release. Stay tuned for
 > an actual release soon.
@@ -13,7 +13,7 @@ the [VidVerify API](http://vidverify.com) and the data it returns.
 Requirements
 ------------
 
-- PHP 5.6 and above
+- PHP 5.5 and above
 - See the `require` section of [composer.json](composer.json)
 
 Documentation
@@ -32,7 +32,7 @@ Open a command console, enter your project directory and execute the following
 command to download the latest stable release:
 
 ```bash
-$ composer require webmax/vidverify-client "~1.0"
+$ composer require webmax/cbc-client "~1.0"
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -46,14 +46,18 @@ Quick Start
 $loader = require_once 'vendor/autoload.php';
 $loader->register(true);
 
-$apiKey = '<api-key>';
-$endpoint = '<endpoint-subdomain>';
+$loginId = '<loginId>';
+$password = '<password>';
+$env = '<endpoint-subdomain>';
 
-$client = new VidVerifyClient($endpoint, $apiKey, [], null, true);
+$client = new CBCClient($env, $loginId, $password, [], null, true);
 
-$from = new \DateTime('2015-01-01 12:00');
-$to = new \DateTime('2016-07-12 12:00');
-$activities = $client->getAllActivities($from, $to);
+$requestor = new stdClass;
+$requestor->name = "Some Mortgage Co";
+$requestor->streetAddress = "123 Some Lane, Suite 100";
+$requestor->city = "Daytona Beach";
+$requestor->state = "FL";
+$requestor->zip = "32124";
 ```
 
 Contributing
@@ -84,7 +88,6 @@ $ phpunit
 Thanks
 ------
 
-- [VidVerify](http://vidverify.com) - API creator
+- [CBCInnovis](http://cbcinnovis.com) - API creator
 - [GuzzleHTTP](http://docs.guzzlephp.org) - Base client library
-- [JMS Serializer](http://jmsyst.com/libs/serializer) - JSON deserializer
 - [PHPUnit](https://phpunit.de/) - PHP testing framework
