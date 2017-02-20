@@ -7,13 +7,13 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
-use Webmax\VidVerifyClient\VidVerifyClient;
+use Webmax\CBCClient\CBCClient;
 
 abstract class ClientTestCase extends PHPUnit_Framework_TestCase
 {
     public function createClient(array $config = array(), $serializerCacheDirectory = null, $debug = true)
     {
-        return new VidVerifyClient("noworkie", "asdf", $config, $serializerCacheDirectory, $debug);
+        return new CBCClient("noworkie", "asdf", $config, $serializerCacheDirectory, $debug);
     }
 
     protected function getData($file)

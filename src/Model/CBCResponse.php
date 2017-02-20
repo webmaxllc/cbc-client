@@ -1,13 +1,13 @@
 <?php
 
-namespace Webmax\VidVerifyClient\Model;
+namespace Webmax\CBCClient\Model;
 
 /**
- * VidVerify response model
+ * CBC response model
  *
  * @author Frank Bardon Jr. <frankbardon@gmail.com>
  * @todo Fully unit test.
  */
-class VidVerifyResponse
+class CBCResponse
 {
 }

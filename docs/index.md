@@ -1,4 +1,4 @@
-VidVerify API client documentation
+CBC API client documentation
 ==============================
 
 Autoloading
@@ -32,7 +32,7 @@ To enable debugging, simply pass `boolean true` as the fifth argument of the
 API client constructor:
 
 ```php
-$client = new VidVerifyClient();
+$client = new CBCClient();
 ```
 
 Changing the serializer metadata cache directory
@@ -47,7 +47,7 @@ By default, the serializer will store all metadata in the directory returned by
 the fourth argument to the API client constructor.
 
 ```php
-$client = new VidVerifyClient();
+$client = new CBCClient();
 ```
 
 Extending the Guzzle HTTP library
@@ -65,14 +65,14 @@ As far as this library is concerned, you may pass any configuration values for
 Guzzle as the third API client constructor parameter:
 
 ```php
-$client = new VidVerifyClient();
+$client = new CBCClient();
 ```
 
-You may also access the client directly (forgoing the simple VidVerify wrapper)
+You may also access the client directly (forgoing the simple CBC wrapper)
 and perform more complex queries using Guzzle directly:
 
 ```php
-$client = new VidVerifyClient();
+$client = new CBCClient();
 
 $client->getGuzzleClient()->requestAsync(...); // Example
 ```

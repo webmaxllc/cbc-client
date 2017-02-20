@@ -1,14 +1,14 @@
 <?php
 
-namespace Webmax\VidVerifyClient\Exception;
+namespace Webmax\CBCClient\Exception;
 
 use RuntimeException;
 
 /**
- * Generic VidVerify client exception
+ * Generic CBC client exception
  *
  * @author Frank Bardon Jr. <frankbardon@gmail.com>
  */
-class GenericException extends RuntimeException implements VidVerifyClient
+class GenericException extends RuntimeException implements CBCException
 {
 }

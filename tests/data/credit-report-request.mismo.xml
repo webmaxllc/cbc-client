@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST_GROUP MISMOVersionID="2.3.1">
+    <REQUESTING_PARTY
+            _Name="Universal American Mortgage Company" _StreetAddress="15550 Lightwave Dr #200"
+            _City="Clearwater" _State="FL" _PostalCode="33760">
+    </REQUESTING_PARTY>
+    <RECEIVING_PARTY
+            _Name="CBCInnovis" _StreetAddress="250 E Town ST"
+            _City="Columbus" _State="OH" _PostalCode="43215">
+    </RECEIVING_PARTY>
+    <SUBMITTING_PARTY
+            _Name="Webmax" _StreetAddress="461 Rt 168, Suite B"
+            _City="Turnersville" _State="NJ" _PostalCode="08012">
+    </SUBMITTING_PARTY>
+    <REQUEST
+            LoginAccountIdentifier="qa42024"
+            LoginAccountPassword="Webmax2017!"
+            InternalAccountIdentifier="">
+        <REQUEST_DATA>
+            <CREDIT_REQUEST MISMOVersionID="2.3.1"
+                            LenderCaseIdentifier="12345678"
+                            RequestingPartyRequestedByName="Zach Rosenberg">
+                <CREDIT_REQUEST_DATA CreditRequestID="CreditRequest1"
+                                     BorrowerID="Borrower"
+                                     CreditReportRequestActionType="Submit"
+                                     CreditReportType="Merge"
+                                     CreditRequestType="Individual">
+                    <CREDIT_REPOSITORY_INCLUDED
+                            _EquifaxIndicator="Y"
+                            _ExperianIndicator="Y"
+                            _TransUnionIndicator="Y"/>
+                </CREDIT_REQUEST_DATA>
+                <LOAN_APPLICATION>
+                    <BORROWER BorrowerID="Borrower"
+                              _FirstName="Bronell"
+                              _MiddleName=""
+                              _LastName="Bolton"
+                              _NameSuffix=""
+                              _SSN="666001234"
+                              _NameSuffix=""
+                              _HomeTelephoneNumber=""
+                              _BirthDate="">
+                        <_RESIDENCE
+                                _StreetAddress="131301 Test Rd"
+                                _City="Pittsburgh"
+                                _State="PA"
+                                _PostalCode="15220"
+                                _BorrowerResidencyType="Current"/>
+                    </BORROWER>
+                </LOAN_APPLICATION>
+            </CREDIT_REQUEST>
+        </REQUEST_DATA>
+    </REQUEST>
+</REQUEST_GROUP>

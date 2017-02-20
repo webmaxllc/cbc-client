@@ -1,36 +1,36 @@
 <?php
 
-use Webmax\VidVerifyClient\Model\Activity;
+use Webmax\CBCClient\Model\Activity;
 
-class VidVerifyTests extends ClientTestCase
+class CBCTests extends ClientTestCase
 {
-    public function testInvoiceReportSuccessResponse()
+    public function testCreditReportSuccessResponse()
     {
-        $client = $this->createClient($this->getHandledConfig('invoice-report'));
+        $client = $this->createClient($this->getHandledConfig('credit-report'));
     }
 
-    public function testBorrowerActivitiesSuccessResponse()
+    public function testCreditReportSuccessResponseIsCorrect()
     {
-        $client = $this->createClient($this->getHandledConfig('borrower-activity'));
-    }
+        $client = $this->createClient($this->getHandledConfig('credit-report'));
 
-    public function testAllActivitiesSuccessResponse()
-    {
-        $client = $this->createClient($this->getHandledConfig('all-activity'));
-    }
+        $borrower = new stdClass();
+        $borrower->ID = "Borrower";
+        $borrower->FirstName = "Bronell";
+        $borrower->LastName = "Bolton";
+        $borrower->SSN = "660601234";
+        $borrower->residence = new stdClass();
+        $borrower->residence->StreetAddress = "131301 Test Rd";
+        $borrower->residence->City = "Pittsburgh";
+        $borrower->residence->State = "PA";
+        $borrower->residence->PostalCode = "15220";
+        $borrower->residence->BorrowerResidencyType = "Current";
 
-    public function testInvoiceReportSuccessResponseIsCorrect()
-    {
-        $client = $this->createClient($this->getHandledConfig('invoice-report'));
-        $year = "2016";
-        $month = "December";
-
-        $response = $client->getInvoiceReport($year, $month);
+        $response = $client->getCreditReport($year, $month);
 
         $this->assertInternalType('array', $response);
         $this->assertCount(2, $response);
-        $this->assertInstanceOf('Webmax\VidVerifyClient\Model\InvoiceRecord', $response[0]);
-        $this->assertInstanceOf('Webmax\VidVerifyClient\Model\InvoiceRecord', $response[1]);
+        $this->assertInstanceOf('Webmax\CBCClient\Model\CreditReport', $response[0]);
+        $this->assertInstanceOf('Webmax\CBCClient\Model\CreditReport', $response[1]);
     }
 
     public function testInvoiceReportSuccessResponseIsNull()
@@ -54,8 +54,8 @@ class VidVerifyTests extends ClientTestCase
 
         $this->assertInternalType('array', $response);
         $this->assertCount(2, $response);
-        $this->assertInstanceOf('Webmax\VidVerifyClient\Model\Activity', $response[0]);
-        $this->assertInstanceOf('Webmax\VidVerifyClient\Model\Activity', $response[1]);
+        $this->assertInstanceOf('Webmax\CBCClient\Model\Activity', $response[0]);
+        $this->assertInstanceOf('Webmax\CBCClient\Model\Activity', $response[1]);
     }
 
     public function testAllActivitiesEmptyResponseIsNull()
@@ -78,7 +78,7 @@ class VidVerifyTests extends ClientTestCase
 
         $this->assertInternalType('array', $response);
         $this->assertCount(1, $response);
-        $this->assertInstanceOf('Webmax\VidVerifyClient\Model\BorrowerActivity', $response[0]);
+        $this->assertInstanceOf('Webmax\CBCClient\Model\BorrowerActivity', $response[0]);
     }
 
     public function testBorrowerActivitiesSuccessResponseIsNull()
@@ -94,14 +94,8 @@ class VidVerifyTests extends ClientTestCase
     private function getHandledConfig($which)
     {
         switch ($which) {
-            case 'all-activity':
-                $response = $this->mockResponse(200, array(), $this->getData('all-activity'));
-                break;
-            case 'borrower-activity':
-                $response = $this->mockResponse(200, array(), $this->getData('borrower-activity'));
-                break;
-            case 'invoice-report':
-                $response = $this->mockResponse(200, array(), $this->getData('invoice-report'));
+            case 'credit-report':
+                $response = $this->mockResponse(200, array(), $this->getData('credit-report'));
                 break;
             case 'null':
                 $response = $this->mockResponse(200, array(), 'null');

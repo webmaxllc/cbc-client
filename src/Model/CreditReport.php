@@ -2,8 +2,15 @@
 
 namespace Webmax\CBCClient\Model;
 
-class InvoiceRecord
+class CreditReport
 {
+    /**
+     * Loan id
+     *
+     * @var integer
+     */
+    protected $loanId;
+
     /**
      * Borrower id
      *
@@ -12,11 +19,12 @@ class InvoiceRecord
     protected $borrowerId;
 
     /**
-     * Amount of videos watched
+     * Equifax Scred
      *
      * @var integer
      */
-    protected $watchedVideoCount;
+    protected $equifaxScore;
+
 
 
     public function getBorrowerId()
@@ -24,8 +32,9 @@ class InvoiceRecord
         return $this->borrowerId;
     }
 
-    public function getWatchedVideoCount()
+    public function getLoanId()
     {
-        return $this->watchedVideoCount;
+        return $this->loanId;
     }
+
 }

@@ -1,10 +1,10 @@
 <?php
 
-use Webmax\VidVerifyClient\Model\Activity;
+use Webmax\CBCClient\Model\Activity;
 
 class ActivityTests extends ClientTestCase
 {
-    const BORROWER_ID = 1;
+    const BORROWER_ID = 'Borrower';
     const VIDEO_ID = 4;
     const VIDEO_TITLE = 'Video Title';
     const VIDEO_START_TIME = '0:0:0';

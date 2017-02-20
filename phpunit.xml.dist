@@ -12,7 +12,7 @@
          verbose="true"
 >
     <testsuites>
-        <testsuite name="vidverify-client/tests">
+        <testsuite name="cbc-client/tests">
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>

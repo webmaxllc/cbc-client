@@ -1,7 +1,7 @@
 {
-    "name": "webmax/vidverify-client",
-    "description": "VidVerify PHP client built with Guzzle",
-    "keywords": ["vidverify", "marketing", "webmax"],
+    "name": "webmax/cbc-client",
+    "description": "CBC PHP client built with Guzzle",
+    "keywords": ["cbc", "credit", "webmax"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -10,13 +10,17 @@
             "email": "frankbardon@gmail.com"
         },
         {
+            "name": "Zach Rosenberg",
+            "email": "zgr024@gmail.com"
+        },
+        {
             "name": "Alyssa Stone",
             "email": "alyssa.stone@webmaxco.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Webmax\\VidVerifyClient\\": "src/"
+            "Webmax\\CBCClient\\": "src/"
         }
     },
     "autoload-dev": {

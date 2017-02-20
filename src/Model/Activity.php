@@ -1,6 +1,6 @@
 <?php
 
-namespace Webmax\VidVerifyClient\Model;
+namespace Webmax\CBCClient\Model;
 
 use DateTime;
 use DateInterval;
