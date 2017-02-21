@@ -1,5 +1,5 @@
 {
-    "name": "webmax/cbc-client",
+    "name": "webmaxllc/cbc-client",
     "description": "CBC PHP client built with Guzzle",
     "keywords": ["cbc", "credit", "webmax"],
     "type": "library",
