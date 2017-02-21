@@ -54,7 +54,7 @@ class CBCClient
      * @param boolean $debug
      */
     public function __construct($env, $loginId, $password, $config = array(), $debug = false) {
-        $config = array_merge_recursive($this->getDefaultConfig($env, $loginId), $config);
+        $config = array_merge_recursive($this->getDefaultConfig($env), $config);
         if ($debug) {
             $config['debug'] = true;
         }
@@ -82,7 +82,7 @@ class CBCClient
      * @param string $apiKey
      * @return array
      */
-    protected function getDefaultConfig($env, $loginId)
+    protected function getDefaultConfig($env)
     {
         return array(
             'base_uri' => sprintf('https://%s.creditbureaureports.com', $env),
@@ -106,9 +106,9 @@ class CBCClient
      *
      * @return \SimpleXMLElement|null
      */
-    public function getCreditReport($loanNumber, $loanOfficer, $applicant, $requestor, $submittor)
+    public function getCreditReport($loanNumber, $loanOfficer, $applicants, $requestor, $submittor)
     {
-        $xml = $this->getXMLFromData($loanNumber, $loanOfficer, $applicant, $requestor, $submittor);
+        $xml = $this->getXMLFromData($loanNumber, $loanOfficer, $applicants, $requestor, $submittor);
 
         $response = $this->client->request('POST', sprintf('/servlet/gnbank?logid=%s&command=%s&options=%s',$this->loginId,'apiordretpost',"ORD%3dIN+PA%3dXM+TEXT%3dN+PS%3dA+REVL%3dY+REVF%3dX4+SOFTWARE%3dZZ+MOPT%3d+-opt+newxmlerr"), array(
             'body'=>$xml
@@ -123,7 +123,17 @@ class CBCClient
         return new \SimpleXMLElement($body);
     }
 
-    protected function getXMLFromData($loanNumber,$loanOfficer,$applicant,$requestor, $submittor) {
+    protected function getXMLFromData($loanNumber,$loanOfficer,$applicants,$requestor, $submittor) {
+
+        if (is_array($applicants)) {
+            $applicant = $applicants[0];
+            if (count($applicants) > 1) {
+                $co_applicant = $applicants[1];
+            }
+        } else {
+            $applicant = $applicants;
+        }
+
 
         $mismo = new \SimpleXMLElement("<root></root>");
 
@@ -166,10 +176,10 @@ class CBCClient
             $creditRequest->addAttribute("RequestingPartyRequestedByName",$loanOfficer);
 
             $creditRequestData = $creditRequest->addChild("CREDIT_REQUEST_DATA");
-            $creditRequestData->addAttribute("BorrowerID","Borrower");
+            $creditRequestData->addAttribute("BorrowerID",isset($co_applicant)?"Borrower Coborrower":"Borrower");
             $creditRequestData->addAttribute("CreditReportRequestActionType","Submit");
             $creditRequestData->addAttribute("CreditReportType","Merge");
-            $creditRequestData->addAttribute("CreditRequestType",!empty($co_applicant)?'Joint':'Individual');
+            $creditRequestData->addAttribute("CreditRequestType",isset($co_applicant)?'Joint':'Individual');
 
             $creditRepositoryIncluded = $creditRequestData->addChild("CREDIT_REPOSITORY_INCLUDED");
             $creditRepositoryIncluded->addAttribute("_EquifaxIndicator","Y");
@@ -196,11 +206,35 @@ class CBCClient
                 $residence->addAttribute("_BorrowerResidencyType",$key===0?"Current":"Previous");
             }
 
+            if (isset($co_applicant)) {
+                $co_borrower = $loanApplication->addChild("BORROWER");
+                $co_borrower->addAttribute("BorrowerID","Coborrower");
+                $co_borrower->addAttribute("_FirstName",$co_applicant->firstName);
+                $co_borrower->addAttribute("_MiddleName",$co_applicant->middleInitial);
+                $co_borrower->addAttribute("_LastName",$co_applicant->lastName);
+                $co_borrower->addAttribute("_NameSuffix",$co_applicant->suffix);
+                $co_borrower->addAttribute("_HomeTelephoneNumber",$co_applicant->homePhone);
+                $co_borrower->addAttribute("_BirthDate",$co_applicant->dob);
+
+                foreach ($co_applicant->residence as $key => $house) {
+                    $co_residence = $co_borrower->addChild("_RESIDENCE");
+                    $co_residence->addAttribute("_StreetAddress",$house->streetAddress);
+                    $co_residence->addAttribute("_City",$house->city);
+                    $co_residence->addAttribute("_State",$house->state);
+                    $co_residence->addAttribute("_PostalCode",$house->zip);
+                    $co_residence->addAttribute("_BorrowerResidencyType",$key===0?"Current":"Previous");
+                }
+            }
+
 
         } catch (\Exception $e) {
 
             throw $e;
 
+        }
+
+        if ($this->debug) {
+            die(var_dump($mismo->asXML()));
         }
 
         return $mismo->asXML();

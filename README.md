@@ -70,6 +70,8 @@ $house->zip = 12345;
 
 $applicant->residences = array($house);
 
+$applicants = array($applicant);
+
 $requestor = new stdClass;
 $requestor->name = "Some Mortgage Co";
 $requestor->streetAddress = "123 Some Lane, Suite 100";
@@ -82,7 +84,7 @@ $requestor->streetAddress = "123 Some Lane, Suite 200";
 $requestor->city = "Daytona Beach";
 $requestor->state = "FL";
 $requestor->zip = "32124";
-$report = $client->getCreditReport($loanNumber,$loanOfficer,$applicant,$requestor,$submittor);
+$report = $client->getCreditReport($loanNumber,$loanOfficer,$applicants,$requestor,$submittor);
 
 ```
 
