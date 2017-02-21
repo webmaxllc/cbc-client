@@ -85,7 +85,7 @@ class CBCClient
     protected function getDefaultConfig($env, $loginId)
     {
         return array(
-            'base_uri' => sprintf('https://%s.creditbureaureports.com', $env, $loginId, "apiordretpost","ORD%3dIN+PA%3dXM+TEXT%3dN+PS%3dA+REVL%3dY+REVF%3dX4+SOFTWARE%3dZZ+MOPT%3d+-opt+newxmlerr"),
+            'base_uri' => sprintf('https://%s.creditbureaureports.com', $env),
             'connect_timeout' => 3,
             'timeout' => 5,
             'headers' => array(
