@@ -135,11 +135,11 @@ class CBCClient
         }
 
 
-        $mismo = new \SimpleXMLElement("<root></root>");
+
 
         try {
 
-            $requestGroup = $mismo->addChild("REQUEST_GROUP");
+            $requestGroup = new \SimpleXMLElement("REQUEST_GROUP");
             $requestGroup->addAttribute("MISMOVersionID", "2.3.1");
 
             $requestingParty = $requestGroup->addChild("REQUESTING_PARTY");
@@ -194,6 +194,7 @@ class CBCClient
             $borrower->addAttribute("_MiddleName",$applicant->middleInitial);
             $borrower->addAttribute("_LastName",$applicant->lastName);
             $borrower->addAttribute("_NameSuffix",$applicant->suffix);
+            $borrower->addAttribute("_SSN",$applicant->ssn);
             $borrower->addAttribute("_HomeTelephoneNumber",$applicant->homePhone);
             $borrower->addAttribute("_BirthDate",$applicant->dob);
 
@@ -213,6 +214,7 @@ class CBCClient
                 $co_borrower->addAttribute("_MiddleName",$co_applicant->middleInitial);
                 $co_borrower->addAttribute("_LastName",$co_applicant->lastName);
                 $co_borrower->addAttribute("_NameSuffix",$co_applicant->suffix);
+                $co_borrower->addAttribute("_SSN",$co_applicant->ssn);
                 $co_borrower->addAttribute("_HomeTelephoneNumber",$co_applicant->homePhone);
                 $co_borrower->addAttribute("_BirthDate",$co_applicant->dob);
 

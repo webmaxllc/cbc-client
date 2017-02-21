@@ -54,37 +54,56 @@ $client = new CBCClient($env, $loginId, $password, [], null, true);
 
 $loanNumber = 12345678;
 $loanOfficer = "James Johnson";
-$applicant = new stdClass;
-$applicant->firstName = "John";
-$applicant->middleInitial = "G";
-$applicant->lastName = "Doe";
-$applicant->suffix = "Jr.";
-$applicant->homePhone = 5555551234;
-$applicant->dob = "7/21/1997";
 
-$house = new stdClass;
-$house->streetAddress = "123 Atlantic Avenue";
-$house->city = "Atlantic City";
-$house->state = 'NJ');
-$house->zip = 12345;
+$borrower = new stdClass;
+$borrower->firstName = "John";
+$borrower->middleInitial = "G";
+$borrower->lastName = "Doe";
+$borrower->suffix = "Jr.";
+$borrower->ssn = "123456789";
+$borrower->homePhone = "5555551234";
+$borrower->dob = "07/21/1997";
 
-$applicant->residences = array($house);
+$location = new stdClass;
+$location->streetAddress = "123 Atlantic Avenue";
+$location->city = "Atlantic City";
+$location->state = 'NJ');
+$location->zip = 12345;
 
-$applicants = array($applicant);
+$borrower->residences = array($location);
 
-$requestor = new stdClass;
-$requestor->name = "Some Mortgage Co";
-$requestor->streetAddress = "123 Some Lane, Suite 100";
-$requestor->city = "Daytona Beach";
-$requestor->state = "FL";
-$requestor->zip = "32124";
-$submittor = new stdClass;
-$requestor->name = "Some Dev Co";
-$requestor->streetAddress = "123 Some Lane, Suite 200";
-$requestor->city = "Daytona Beach";
-$requestor->state = "FL";
-$requestor->zip = "32124";
-$report = $client->getCreditReport($loanNumber,$loanOfficer,$applicants,$requestor,$submittor);
+$co_borrower = new stdClass;
+$co_borrower->firstName = "John";
+$co_borrower->middleInitial = "G";
+$co_borrower->lastName = "Doe";
+$co_borrower->suffix = "Jr.";
+$co_borrower->ssn = "123456789";
+$co_borrower->homePhone = "5555551234";
+$co_borrower->dob = "07/21/1997";
+
+$co_location = new stdClass;
+$co_location->streetAddress = "123 Atlantic Avenue";
+$co_location->city = "Atlantic City";
+$co_location->state = 'NJ';
+$co_location->zip = 12345;
+
+$co_borrower->residences = array($borrower,$coborrower);
+
+$borrowers = array($applicant1);
+
+$requester = new stdClass;
+$requester->name = "Some Mortgage Co";
+$requester->streetAddress = "123 Some Lane, Suite 100";
+$requester->city = "Daytona Beach";
+$requester->state = "FL";
+$requester->zip = "32124";
+$submitter = new stdClass;
+$requester->name = "Some Dev Co";
+$requester->streetAddress = "123 Some Lane, Suite 200";
+$requester->city = "Daytona Beach";
+$requester->state = "FL";
+$requester->zip = "32124";
+$report = $client->getCreditReport($loanNumber,$loanOfficer,$borrowers,$requester,$submitter);
 
 ```
 
