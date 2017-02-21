@@ -236,10 +236,10 @@ class CBCClient
         }
 
         if ($this->debug) {
-            die(var_dump($mismo->asXML()));
+            die(var_dump($requestGroup->asXML()));
         }
 
-        return $mismo->asXML();
+        return $requestGroup->asXML();
     }
 
 }
