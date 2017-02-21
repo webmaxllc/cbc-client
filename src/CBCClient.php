@@ -139,7 +139,7 @@ class CBCClient
 
         try {
 
-            $requestGroup = new \SimpleXMLElement("REQUEST_GROUP");
+            $requestGroup = new \SimpleXMLElement("<REQUEST_GROUP></REQUEST_GROUP>");
             $requestGroup->addAttribute("MISMOVersionID", "2.3.1");
 
             $requestingParty = $requestGroup->addChild("REQUESTING_PARTY");
