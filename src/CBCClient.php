@@ -85,8 +85,6 @@ class CBCClient
     {
         return array(
             'base_uri' => sprintf('https://%s.creditbureaureports.com', $env),
-            'connect_timeout' => 3,
-            'timeout' => 5,
             'headers' => array(
                 'Content-Type' => 'application/xml',
                 'Accepts' => 'application/xml',
@@ -237,7 +235,7 @@ class CBCClient
             die($requestGroup->asXML());
         }
 
-        return $requestGroup;
+        return $requestGroup->asXML();
     }
 
 }
