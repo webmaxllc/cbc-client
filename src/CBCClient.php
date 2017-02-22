@@ -74,7 +74,6 @@ class CBCClient
         return $this->client;
     }
 
-
     /**
      * Get default client configuration
      *
@@ -106,9 +105,9 @@ class CBCClient
      *
      * @return \SimpleXMLElement|null
      */
-    public function getCreditReport($loanNumber, $loanOfficer, $applicants, $requestor, $submittor)
+    public function getCreditReport($json)
     {
-        $xml = $this->getXMLFromData($loanNumber, $loanOfficer, $applicants, $requestor, $submittor);
+        $xml = $this->getXMLFromJSON($json);
 
         $response = $this->client->request('POST', sprintf('/servlet/gnbank?logid=%s&command=%s&options=%s',$this->loginId,'apiordretpost',"ORD%3dIN+PA%3dXM+TEXT%3dN+PS%3dA+REVL%3dY+REVF%3dX4+SOFTWARE%3dZZ+MOPT%3d+-opt+newxmlerr"), array(
             'body'=>$xml
@@ -123,19 +122,18 @@ class CBCClient
         return new \SimpleXMLElement($body);
     }
 
-    protected function getXMLFromData($loanNumber,$loanOfficer,$applicants,$requestor, $submittor) {
+    protected function getXMLFromJSON($json) {
 
-        if (is_array($applicants)) {
-            $applicant = $applicants[0];
-            if (count($applicants) > 1) {
-                $co_applicant = $applicants[1];
+        $data = json_decode($json);
+
+        if (is_array($data->borrowers)) {
+            $applicant = $data->borrowers[0];
+            if (count($data->borrowers) > 1) {
+                $co_applicant = $data->borrowers[1];
             }
         } else {
-            $applicant = $applicants;
+            $applicant = $data->borrowers;
         }
-
-
-
 
         try {
 
@@ -143,11 +141,11 @@ class CBCClient
             $requestGroup->addAttribute("MISMOVersionID", "2.3.1");
 
             $requestingParty = $requestGroup->addChild("REQUESTING_PARTY");
-            $requestingParty->addAttribute("_Name", $requestor->name);
-            $requestingParty->addAttribute("_StreetAddress", $requestor->streetAddress);
-            $requestingParty->addAttribute("_City", $requestor->city);
-            $requestingParty->addAttribute("_State", $requestor->state);
-            $requestingParty->addAttribute("_PostalCode", $requestor->zip);
+            $requestingParty->addAttribute("_Name", $data->requestor->name);
+            $requestingParty->addAttribute("_StreetAddress", $data->requestor->streetAddress);
+            $requestingParty->addAttribute("_City", $data->requestor->city);
+            $requestingParty->addAttribute("_State", $data->requestor->state);
+            $requestingParty->addAttribute("_PostalCode", $data->requestor->zip);
 
             $receivingParty = $requestGroup->addChild("RECEIVING_PARTY");
             $receivingParty->addAttribute("_Name", self::RECEIVING_NAME);
@@ -157,11 +155,11 @@ class CBCClient
             $receivingParty->addAttribute("_PostalCode", self::RECEIVING_POSTAL_CODE);
 
             $submittingParty = $requestGroup->addChild("RECEIVING_PARTY");
-            $submittingParty->addAttribute("_Name", $submittor->name);
-            $submittingParty->addAttribute("_StreetAddress", $submittor->streetAddress);
-            $submittingParty->addAttribute("_City", $submittor->city);
-            $submittingParty->addAttribute("_State", $submittor->state);
-            $submittingParty->addAttribute("_PostalCode", $submittor->zip);
+            $submittingParty->addAttribute("_Name", $data->submittor->name);
+            $submittingParty->addAttribute("_StreetAddress", $data->submittor->streetAddress);
+            $submittingParty->addAttribute("_City", $data->submittor->city);
+            $submittingParty->addAttribute("_State", $data->submittor->state);
+            $submittingParty->addAttribute("_PostalCode", $data->submittor->zip);
 
             $request = $requestGroup->addChild("REQUEST");
             $request->addAttribute("LoginAccountIdentifier",$this->loginId);
@@ -172,8 +170,8 @@ class CBCClient
 
             $creditRequest = $requestData->addChild("CREDIT_REQUEST");
             $creditRequest->addAttribute("MISMOVersionID","2.3.1");
-            $creditRequest->addAttribute("LenderCaseIdentifier",$loanNumber);
-            $creditRequest->addAttribute("RequestingPartyRequestedByName",$loanOfficer);
+            $creditRequest->addAttribute("LenderCaseIdentifier",$data->loanNumber);
+            $creditRequest->addAttribute("RequestingPartyRequestedByName",$data->loanOfficer->name);
 
             $creditRequestData = $creditRequest->addChild("CREDIT_REQUEST_DATA");
             $creditRequestData->addAttribute("BorrowerID",isset($co_applicant)?"Borrower Coborrower":"Borrower");
@@ -198,7 +196,7 @@ class CBCClient
             $borrower->addAttribute("_HomeTelephoneNumber",$applicant->homePhone);
             $borrower->addAttribute("_BirthDate",$applicant->dob);
 
-            foreach ($applicant->residence as $key => $house) {
+            foreach ($applicant->residences as $key => $house) {
                 $residence = $borrower->addChild("_RESIDENCE");
                 $residence->addAttribute("_StreetAddress",$house->streetAddress);
                 $residence->addAttribute("_City",$house->city);
@@ -218,7 +216,7 @@ class CBCClient
                 $co_borrower->addAttribute("_HomeTelephoneNumber",$co_applicant->homePhone);
                 $co_borrower->addAttribute("_BirthDate",$co_applicant->dob);
 
-                foreach ($co_applicant->residence as $key => $house) {
+                foreach ($co_applicant->residences as $key => $house) {
                     $co_residence = $co_borrower->addChild("_RESIDENCE");
                     $co_residence->addAttribute("_StreetAddress",$house->streetAddress);
                     $co_residence->addAttribute("_City",$house->city);
