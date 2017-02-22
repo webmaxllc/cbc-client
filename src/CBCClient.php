@@ -237,7 +237,7 @@ class CBCClient
             die(var_dump($requestGroup->asXML()));
         }
 
-        return $requestGroup->asXML();
+        return $requestGroup;
     }
 
 }
