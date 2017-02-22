@@ -234,7 +234,7 @@ class CBCClient
         }
 
         if ($this->debug) {
-            die(var_dump($requestGroup->asXML()));
+            die($requestGroup->asXML());
         }
 
         return $requestGroup;
