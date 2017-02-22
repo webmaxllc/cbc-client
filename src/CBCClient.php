@@ -101,7 +101,7 @@ class CBCClient
      * @param string $loanOfficer
      * @param object $applicant
      * @param object $requesor
-     * @param object $submittor
+     * @param object $submitter
      *
      * @return \SimpleXMLElement|null
      */
@@ -141,11 +141,11 @@ class CBCClient
             $requestGroup->addAttribute("MISMOVersionID", "2.3.1");
 
             $requestingParty = $requestGroup->addChild("REQUESTING_PARTY");
-            $requestingParty->addAttribute("_Name", $data->requestor->name);
-            $requestingParty->addAttribute("_StreetAddress", $data->requestor->streetAddress);
-            $requestingParty->addAttribute("_City", $data->requestor->city);
-            $requestingParty->addAttribute("_State", $data->requestor->state);
-            $requestingParty->addAttribute("_PostalCode", $data->requestor->zip);
+            $requestingParty->addAttribute("_Name", $data->requester->name);
+            $requestingParty->addAttribute("_StreetAddress", $data->requester->streetAddress);
+            $requestingParty->addAttribute("_City", $data->requester->city);
+            $requestingParty->addAttribute("_State", $data->requester->state);
+            $requestingParty->addAttribute("_PostalCode", $data->requester->zip);
 
             $receivingParty = $requestGroup->addChild("RECEIVING_PARTY");
             $receivingParty->addAttribute("_Name", self::RECEIVING_NAME);
@@ -155,11 +155,11 @@ class CBCClient
             $receivingParty->addAttribute("_PostalCode", self::RECEIVING_POSTAL_CODE);
 
             $submittingParty = $requestGroup->addChild("RECEIVING_PARTY");
-            $submittingParty->addAttribute("_Name", $data->submittor->name);
-            $submittingParty->addAttribute("_StreetAddress", $data->submittor->streetAddress);
-            $submittingParty->addAttribute("_City", $data->submittor->city);
-            $submittingParty->addAttribute("_State", $data->submittor->state);
-            $submittingParty->addAttribute("_PostalCode", $data->submittor->zip);
+            $submittingParty->addAttribute("_Name", $data->submitter->name);
+            $submittingParty->addAttribute("_StreetAddress", $data->submitter->streetAddress);
+            $submittingParty->addAttribute("_City", $data->submitter->city);
+            $submittingParty->addAttribute("_State", $data->submitter->state);
+            $submittingParty->addAttribute("_PostalCode", $data->submitter->zip);
 
             $request = $requestGroup->addChild("REQUEST");
             $request->addAttribute("LoginAccountIdentifier",$this->loginId);
