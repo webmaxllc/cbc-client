@@ -174,7 +174,7 @@ class CBCClient
             $creditRequest->addAttribute("RequestingPartyRequestedByName",$data->loanOfficer->name);
 
             $creditRequestData = $creditRequest->addChild("CREDIT_REQUEST_DATA");
-            $creditRequestData->addAttribute("BorrowerID",isset($co_applicant)?"Borrower Coborrower":"Borrower");
+            $creditRequestData->addAttribute("BorrowerID",isset($co_applicant)?$applicant->id.' '.$co_applicant->id:$applicant->id);
             $creditRequestData->addAttribute("CreditReportRequestActionType","Submit");
             $creditRequestData->addAttribute("CreditReportType","Merge");
             $creditRequestData->addAttribute("CreditRequestType",isset($co_applicant)?'Joint':'Individual');
@@ -187,7 +187,7 @@ class CBCClient
             $loanApplication = $creditRequest->addChild("LOAN_APPLICATION");
 
             $borrower = $loanApplication->addChild("BORROWER");
-            $borrower->addAttribute("BorrowerID","Borrower");
+            $borrower->addAttribute("BorrowerID",$applicant->id);
             $borrower->addAttribute("_FirstName",$applicant->firstName);
             $borrower->addAttribute("_MiddleName",$applicant->middleInitial);
             $borrower->addAttribute("_LastName",$applicant->lastName);
@@ -207,7 +207,7 @@ class CBCClient
 
             if (isset($co_applicant)) {
                 $co_borrower = $loanApplication->addChild("BORROWER");
-                $co_borrower->addAttribute("BorrowerID","Coborrower");
+                $co_borrower->addAttribute("BorrowerID",$co_applicant->id);
                 $co_borrower->addAttribute("_FirstName",$co_applicant->firstName);
                 $co_borrower->addAttribute("_MiddleName",$co_applicant->middleInitial);
                 $co_borrower->addAttribute("_LastName",$co_applicant->lastName);
