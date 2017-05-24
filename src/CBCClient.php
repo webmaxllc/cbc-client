@@ -45,6 +45,8 @@ class CBCClient
 
     private $password;
 
+    private $options;
+
 
     /**
      * Constructor
@@ -53,7 +55,7 @@ class CBCClient
      * @param string|null $serializerCacheDirectory
      * @param boolean $debug
      */
-    public function __construct($env, $loginId, $password, $config = array(), $debug = false) {
+    public function __construct($env, $loginId, $password, $options, $config = array(), $debug = false) {
         $config = array_merge_recursive($this->getDefaultConfig($env), $config);
         if ($debug) {
             $config['debug'] = true;
@@ -107,7 +109,7 @@ class CBCClient
     {
         $xml = $this->getXMLFromJSON($json);
 
-        $response = $this->client->request('POST', sprintf('/servlet/gnbank?logid=%s&command=%s&options=%s',$this->loginId,'apiordretpost',"ORD%3dIN+PA%3dXM+TEXT%3dN+PS%3dA+REVL%3dY+REVF%3dX4+SOFTWARE%3dZZ+MOPT%3d+-opt+newxmlerr"), array(
+        $response = $this->client->request('POST', sprintf('/servlet/gnbank?logid=%s&command=%s&options=%s',$this->loginId,'apiordretpost',$this->options), array(
             'body'=>$xml
         ));
 
