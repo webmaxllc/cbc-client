@@ -62,6 +62,7 @@ class CBCClient
         }
         $this->loginId = $loginId;
         $this->password = $password;
+        $this->options = $options;
         $this->debug = $debug;
         $this->client = new GuzzleClient($config);
     }
